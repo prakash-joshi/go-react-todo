@@ -1,16 +1,32 @@
 import { Flex, Spinner, Stack, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import TodoItem from "./TodoItem";
+import { BASE_URL } from "../App";
+
+export type Todo = {
+  _id: number;
+  completed: boolean;
+  body: string;
+};
 
 const TodoList = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { data: todos, isLoading } = useQuery<Todo[]>({
+    queryKey: ["todos"],
 
-  const todos = [
-    { _id: 1, completed: true, body: "Do laundry" },
-    { _id: 2, completed: true, body: "Cook dinner" },
-    { _id: 3, completed: false, body: "Walk the dog" },
-    { _id: 4, completed: false, body: "buy groceries" },
-  ];
+    queryFn: async () => {
+      try {
+        const res = await fetch(BASE_URL + "/todos");
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Something went wrong");
+        }
+        return data || [];
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
 
   return (
     <>
@@ -37,8 +53,8 @@ const TodoList = () => {
         </Stack>
       )}
       <Stack gap={3}>
-        {todos?.map((todo) => (
-          <TodoItem key={todo?._id} todo={todo} />
+        {todos?.map((todo, idx) => (
+          <TodoItem key={idx} todo={todo} />
         ))}
       </Stack>
     </>
