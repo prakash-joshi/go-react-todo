@@ -46,11 +46,18 @@ const TodoForm = () => {
       <Flex gap={2}>
         <Input
           type="text"
+          borderWidth={3}
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
           ref={(input) => input && input.focus()}
+          placeholder="Add todo"
         />
-        <Button mx={2} type="submit" _active={{ transform: "scale(.97)" }}>
+        <Button
+          mx={2}
+          type="submit"
+          _active={{ transform: "scale(.97)" }}
+          colorScheme="blue"
+        >
           {isCreating ? <Spinner size={"xs"} /> : <IoAdd size={30} />}
         </Button>
       </Flex>

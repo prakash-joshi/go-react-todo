@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <Container maxW={"900px"}>
       <Box
-        bg={useColorModeValue("gray.100", "gray.900")}
+        bg={useColorModeValue("gray.300", "gray.900")}
         px={4}
         my={4}
         borderRadius={"5"}
