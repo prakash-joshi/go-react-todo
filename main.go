@@ -34,6 +34,7 @@ func main() {
 	if PORT == "" {
 		PORT = "5000"
 	}
+	fmt.Println("server is running on port :", PORT)
 	log.Fatal(app.Listen(":" + PORT))
 
 }
